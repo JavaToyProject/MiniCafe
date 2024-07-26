@@ -26,14 +26,21 @@ public class BeverageService {
 
     }
 
-    public void findBeverageBy(String bevName) {
-        Beverage selectBeverage = br.selectBeverageBy(bevName.trim());
+    public void findBeverageBy(Object searchBev) {
+        Beverage selectBeverage = new Beverage();
+        if (searchBev instanceof Integer) { // 음료 번호로 검색하는 경우
+            selectBeverage = br.selectBeverageBy((Integer) searchBev);
+        }
+        if (searchBev instanceof String) { // 음료명으로 검색하는 경우
+            selectBeverage = br.selectBeverageBy((String) searchBev);
+        }
+
         if (selectBeverage != null) {
             System.out.println("[조회한 음료 정보] 음료명: " + selectBeverage.getName()
                     + " / 가격: " + selectBeverage.getPrice() + "원 / 칼로리: " + selectBeverage.getCalorie()
                     + "kcal / 카테고리: " + selectBeverage.getCagetory() + " / 재고: " + selectBeverage.getStock() + "잔");
         } else {
-            System.out.println("해당 이름의 음료가 존재하지 않습니다.");
+            System.out.println("해당하는 음료가 존재하지 않습니다.");
         }
     }
 
@@ -63,8 +70,8 @@ public class BeverageService {
         }
     }
 
-    public void removeBeverage(String removeBevName) {
-        int result = br.deleteBeverage(removeBevName);
+    public void removeBeverage(int removeBevNo) {
+        int result = br.deleteBeverage(removeBevNo);
 
         if (result == 1) {
             System.out.println("음료 삭제가 완료되었습니다.");

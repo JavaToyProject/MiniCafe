@@ -87,6 +87,15 @@ public class BeverageRepository {
         return beverageArrayList;
     }
 
+    public Beverage selectBeverageBy(Integer bevNo) {
+        for (Beverage beverage : beverageArrayList) {
+            if (bevNo == beverage.getBevNo()) {
+                return beverage;
+            }
+        }
+        return null;
+    }
+
     public Beverage selectBeverageBy(String bevName) {
         for (Beverage beverage : beverageArrayList) {
             if (Objects.equals(beverage.getName(), bevName)) {
@@ -153,9 +162,9 @@ public class BeverageRepository {
         return 0;
     }
 
-    public int deleteBeverage(String removeBevName) {
+    public int deleteBeverage(int removeBevNo) {
         for (int i = 0; i < beverageArrayList.size(); i++) {
-            if (Objects.equals(removeBevName, beverageArrayList.get(i).getName())) {
+            if (removeBevNo == beverageArrayList.get(i).getBevNo()) {
                 beverageArrayList.remove(i);
 
                 // 삭제된 beverageArrayList 전체를 파일에 덮어씌우기
