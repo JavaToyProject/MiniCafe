@@ -87,7 +87,7 @@ public class BeverageRepository {
         return beverageArrayList;
     }
 
-    public Beverage selectBeverageBy(Integer bevNo) {
+    public Beverage selectBeverageBy(int bevNo) {
         for (Beverage beverage : beverageArrayList) {
             if (bevNo == beverage.getBevNo()) {
                 return beverage;

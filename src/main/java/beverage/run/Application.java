@@ -35,7 +35,15 @@ public class Application {
                     bs.findAllBeverages();
                     break;
                 case 2:
-                    bs.findBeverageBy(chooseBevField());
+                    int findType = chooseBevField();
+                    if (findType == 1) {
+                        bs.findBeverageByBevNo(chooseBevNo());
+                    } else if (findType == 2){
+                        bs.findBeverageByBevName(chooseBevName());
+                    } else {
+                        System.out.println("잘못된 번호를 입력하셨습니다.");
+                    }
+
                     break;
                 case 3:
                     bs.findBeveragListBy(chooseBevFilter());
@@ -58,7 +66,23 @@ public class Application {
         }
     }
 
-    private static Object chooseBevField() {
+    private static Integer chooseBevNo() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("검색할 음료번호를 입력해주세요: ");
+        Integer bevNo = sc.nextInt();
+        System.out.println("――――――――――――――");
+        return bevNo;
+    }
+
+    private static String chooseBevName() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("검색할 음료명을 입력해주세요: ");
+        String bevName = sc.nextLine();
+        System.out.println("――――――――――――――");
+        return bevName;
+    }
+
+    private static int chooseBevField() {
         // 가격, 칼로리, 카테고리는 중복된 값이 있을 수 있기 때문에 단일 검색에서 제외
         Scanner sc = new Scanner(System.in);
         System.out.println("◤――― 음료 검색 ―――◥");
@@ -68,26 +92,9 @@ public class Application {
         System.out.print("검색할 기준을 입력해주세요: ");
 
         int searchType = sc.nextInt();
-        Object result = null;
-
-        switch (searchType) {
-            case 1: // 음료 번호로 조회
-                System.out.print("검색할 음료번호를 입력해주세요: ");
-                int bevNo = sc.nextInt();
-                result = bevNo;
-                break;
-            case 2: // 음료명으로 조회
-                sc.nextLine();
-                System.out.print("검색할 음료명을 입력해주세요: ");
-                String bevName = sc.nextLine();
-                result = bevName;
-                break;
-            default:
-                System.out.println("잘못된 번호를 입력하셨습니다.");
-        }
-        System.out.println("――――――――――――――");
-        return result;
+        return searchType;
     }
+
 
     private static int[] chooseBevFilter() {
         Scanner sc = new Scanner(System.in);

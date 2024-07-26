@@ -24,14 +24,21 @@ public class BeverageService {
 
     }
 
-    public void findBeverageBy(Object searchBev) {
+    public void findBeverageByBevNo(Integer searchBevNo) { // 음료 번호로 검색하는 경우
         Beverage selectBeverage = new Beverage();
-        if (searchBev instanceof Integer) { // 음료 번호로 검색하는 경우
-            selectBeverage = br.selectBeverageBy((Integer) searchBev);
+        selectBeverage = br.selectBeverageBy(searchBevNo);
+
+        if (selectBeverage != null) {
+            System.out.print("\n[조회한 음료 정보] ");
+            printBeverage(selectBeverage);
+        } else {
+            System.out.println("해당하는 음료가 존재하지 않습니다.");
         }
-        if (searchBev instanceof String) { // 음료명으로 검색하는 경우
-            selectBeverage = br.selectBeverageBy((String) searchBev);
-        }
+    }
+
+    public void findBeverageByBevName(String searchBevName) {
+        Beverage selectBeverage = new Beverage();
+        selectBeverage = br.selectBeverageBy(searchBevName);
 
         if (selectBeverage != null) {
             System.out.print("[조회한 음료 정보] ");
