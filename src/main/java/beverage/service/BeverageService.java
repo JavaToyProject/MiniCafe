@@ -16,12 +16,10 @@ public class BeverageService {
     public void findAllBeverages() {
         ArrayList<Beverage> findBeverages = br.selectAllBeverages();
 
-        System.out.println("모든 음료 정보");
+        System.out.println("[모든 음료 정보]");
         for (Beverage beverages : findBeverages) {
-            System.out.println("[" + beverages.getBevNo() + "번 음료 정보] 음료명: " + beverages.getName()
-                    + " / 가격: " + beverages.getPrice() + "원 / 칼로리: " + beverages.getCalorie()
-                    + "kcal / 카테고리: " + beverages.getCagetory() + " / 재고: " + beverages.getStock() + "잔");
-//            System.out.println("beverages = " + beverages);
+            System.out.print("[" + beverages.getBevNo() + "번 음료 정보] 음료명: " );
+            printBeverage(beverages);
         }
 
     }
@@ -36,9 +34,8 @@ public class BeverageService {
         }
 
         if (selectBeverage != null) {
-            System.out.println("[조회한 음료 정보] 음료명: " + selectBeverage.getName()
-                    + " / 가격: " + selectBeverage.getPrice() + "원 / 칼로리: " + selectBeverage.getCalorie()
-                    + "kcal / 카테고리: " + selectBeverage.getCagetory() + " / 재고: " + selectBeverage.getStock() + "잔");
+            System.out.print("[조회한 음료 정보] ");
+            printBeverage(selectBeverage);
         } else {
             System.out.println("해당하는 음료가 존재하지 않습니다.");
         }
@@ -51,9 +48,8 @@ public class BeverageService {
 
         if (result == 1) {
             System.out.println("\n음료를 성공적으로 등록했습니다.");
-            System.out.println("[등록한 음료 정보] 음료명: " + newBeverage.getName()
-                    + " / 가격: " + newBeverage.getPrice() + "원 / 칼로리: " + newBeverage.getCalorie()
-                    + "kcal / 카테고리: " + newBeverage.getCagetory() + " / 재고: " + newBeverage.getStock() + "잔");
+            System.out.print("[등록한 음료 정보] ");
+            printBeverage(newBeverage);
         } else {
             System.out.println("음료 등록을 실패했습니다.");
         }
@@ -116,12 +112,14 @@ public class BeverageService {
         }
 
         for (Beverage beverage : filterBeverageList) {
-            System.out.println("음료명: " + beverage.getName()
-                    + " / 가격: " + beverage.getPrice() + "원 / 칼로리: " + beverage.getCalorie()
-                    + "kcal / 카테고리: " + beverage.getCagetory() + " / 재고: " + beverage.getStock() + "잔");
+            printBeverage(beverage);
         }
         return filterBeverageList;
     }
 
 
+    private static void printBeverage(Beverage beverages) {
+        System.out.println("음료명: " + beverages.getName() + " / 가격: " + beverages.getPrice() + "원 / 칼로리: " + beverages.getCalorie()
+                + "kcal / 카테고리: " + beverages.getCagetory() + " / 재고: " + beverages.getStock() + "잔");
+    }
 }
