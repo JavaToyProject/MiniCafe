@@ -38,12 +38,12 @@ public class BeverageService {
     }
 
     public void registBeverage(Beverage newBeverage) {
-        int lastBevNo = br.selectLastMemberNo();
+        int lastBevNo = br.selectLastBeverageNo();
         newBeverage.setBevNo(lastBevNo + 1);
         int result = br.insertBeverage(newBeverage);
 
         if (result == 1) {
-            System.out.println("음료를 성공적으로 등록했습니다.");
+            System.out.println("\n음료를 성공적으로 등록했습니다.");
             System.out.println("[등록한 음료 정보] 음료명: " + newBeverage.getName()
                     + " / 가격: " + newBeverage.getPrice() + "원 / 칼로리: " + newBeverage.getCalorie()
                     + "kcal / 카테고리: " + newBeverage.getCagetory() + " / 재고: " + newBeverage.getStock() + "잔");

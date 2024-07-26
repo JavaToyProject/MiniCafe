@@ -96,7 +96,7 @@ public class BeverageRepository {
         return null;
     }
 
-    public int selectLastMemberNo() {
+    public int selectLastBeverageNo() {
 
         Beverage lastBeverage = beverageArrayList.get(beverageArrayList.size()-1);
         return lastBeverage.getBevNo();

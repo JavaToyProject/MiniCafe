@@ -14,17 +14,21 @@ public class Application {
 
             Scanner sc = new Scanner(System.in);
             while (true) {
-                System.out.println("\n===== 음료 관리 =====");
-                System.out.println("1. 모든 음료 정보 보기");
-                System.out.println("2. 음료명으로 음료 검색");
-                System.out.println("3. 음료 조회하기"); // 특정 기준에 따라 음료 조회
-                System.out.println("4. 음료 등록하기");
-                System.out.println("5. 음료 정보 수정");
-                System.out.println("6. 음료 삭제");
-                System.out.println("0. 프로그램 종료");
-                System.out.print("메뉴를 선택해주세요: ");
+                System.out.println("\n◤――― 음료 관리 ―――◥");
+                System.out.println("| 1. 음료 전체 조회    |");
+                System.out.println("| 2. 음료 검색        |");
+                System.out.println("| 3. 음료 목록 검색    |"); // 특정 기준에 따라 음료 조회
+                System.out.println("| 4. 음료 등록        |");
+                System.out.println("| 5. 음료 정보 수정    |");
+                System.out.println("| 6. 음료 삭제        |");
+                System.out.println("| 0. 프로그램 종료     |");
+                System.out.println("◣――――――――――――◢");
+                System.out.print("원하는 메뉴를 선택해주세요: ");
 
                 int input = sc.nextInt();
+                System.out.println("―――――――――――――");
+
+                System.out.println();
 
                 switch (input) {
                     case 1:
@@ -46,7 +50,7 @@ public class Application {
                         bs.removeBeverage(chooseBevName());
                         break;
                     case 0:
-                        System.out.println("회원관리 프로그램을 종료합니다.");
+                        System.out.println("음료 관리 프로그램을 종료합니다.");
                         return;
                     default:
                         System.out.println("번호를 잘못 입력하셨습니다.");
@@ -56,13 +60,14 @@ public class Application {
 
         private static int[] chooseBevFilter() {
             Scanner sc = new Scanner(System.in);
-            System.out.println("===== 음료 목록 필터링 =====");
+            System.out.println("◤――――― 음료 목록 검색 ―――――◥");
 //        System.out.println("1. 가격이 낮은 순으로 정렬");
 //        System.out.println("2. 가격이 높은 순으로 정렬");
-            System.out.println("1. 특정 카테고리 음료만 조회");
-            System.out.println("2. 특정 금액 이상의 음료만 조회");
-            System.out.println("3. 특정 금액 이하의 음료만 조회");
-            System.out.println("0. 메인 화면으로 돌아가기");
+            System.out.println("| 1. 특정 카테고리 음료만 조회      |");
+            System.out.println("| 2. 특정 금액 이상의 음료만 조회    |");
+            System.out.println("| 3. 특정 금액 이하의 음료만 조회    |");
+            System.out.println("| 0. 메인 화면으로 돌아가기         |");
+            System.out.println("◣―――――――――――――――――――◢");
             System.out.print("검색할 기준을 입력해주세요: ");
 
             int input = sc.nextInt();
@@ -92,6 +97,8 @@ public class Application {
                 default:
                     System.out.println("잘못된 번호를 입력하셨습니다.");
             }
+            System.out.println("―――――――――――――――――");
+
             return filterArr;
         }
 
@@ -100,17 +107,27 @@ public class Application {
 
             Scanner sc = new Scanner(System.in);
 
-            System.out.print("\n수정할 음료의 번호를 입력해주세요: ");
+            System.out.print("수정할 음료의 번호를 입력해주세요: ");
             reformBev.setBevNo(sc.nextInt());
 
             while (true) {
-                System.out.println("\n===== 음료 정보 수정 =====");
-                System.out.println("1. 음료 이름");
-                System.out.println("2. 음료 가격");
-                System.out.println("3. 음료 칼로리");
-                System.out.println("4. 음료 카테고리");
-                System.out.println("5. 음료 재고");
-                System.out.println("0. 수정 완료(메인 메뉴로 돌아가기)");
+//                    System.out.println("\n◤――― 음료 관리 ―――◥");
+//                System.out.println("| 1. 음료 전체 조회    |");
+//                System.out.println("| 2. 음료 검색        |");
+//                System.out.println("| 3. 음료 목록 검색    |"); // 특정 기준에 따라 음료 조회
+//                System.out.println("| 4. 음료 등록        |");
+//                System.out.println("| 5. 음료 정보 수정    |");
+//                System.out.println("| 6. 음료 삭제        |");
+//                System.out.println("| 0. 프로그램 종료     |");
+//                System.out.println("◣――――――――――――◢");
+                System.out.println("\n◤――――― 음료 정보 수정 ―――――◥");
+                System.out.println("| 1. 음료 이름                   |");
+                System.out.println("| 2. 음료 가격                   |");
+                System.out.println("| 3. 음료 칼로리                 |");
+                System.out.println("| 4. 음료 카테고리                |");
+                System.out.println("| 5. 음료 재고                   |");
+                System.out.println("| 0. 수정 완료(메인 메뉴로 돌아가기) |");
+                System.out.println("◣―――――――――――――――――――◢");
                 System.out.print("수정할 정보를 선택해주세요: ");
 
                 int input = sc.nextInt();
@@ -173,7 +190,6 @@ public class Application {
             beverage.setCagetory(bc);
             beverage.setStock(stock);
 
-            System.out.println(beverage);
             return beverage;
         }
 
@@ -199,6 +215,7 @@ public class Application {
 
         private static String chooseBevName() {
             Scanner sc = new Scanner(System.in);
+            System.out.println("음료 검색을 시작합니다. ");
             System.out.print("찾으시는 음료의 이름을 입력해주세요: ");
             return sc.nextLine();
         }
