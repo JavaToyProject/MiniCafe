@@ -41,7 +41,7 @@ public class BeverageService {
         selectBeverage = br.selectBeverageBy(searchBevName);
 
         if (selectBeverage != null) {
-            System.out.print("[조회한 음료 정보] ");
+            System.out.print("\n[조회한 음료 정보] ");
             printBeverage(selectBeverage);
         } else {
             System.out.println("해당하는 음료가 존재하지 않습니다.");
