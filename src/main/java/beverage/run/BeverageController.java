@@ -4,6 +4,7 @@ import beverage.aggregate.Beverage;
 import beverage.aggregate.BeverageCategory;
 import beverage.service.BeverageService;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BeverageController {
@@ -59,33 +60,73 @@ public class BeverageController {
     }
 
     private static void deleteBeverage() {
-        bs.removeBeverage(chooseRemoveBevNo());
-    }
+        int result = bs.removeBeverage(chooseRemoveBevNo());
 
-    private static void updateBeverage() {
-        bs.modifyBeverage(reformBev());
-    }
-
-    private static void registBeverage() {
-        bs.registBeverage(registBev());
-    }
-
-    private static void searchBeverageList() {
-        bs.findBeveragListBy(searchBevList());
-    }
-
-    private static void searchBeverage() {
-        int findType = displaySearchMenu();
-        switch (findType) {
-            case 1: bs.findBeverageByBevNo(chooseBevNo()); break;
-            case 2: bs.findBeverageByBevName(chooseBevName()); break;
-            default:
-                System.out.println("잘못된 번호를 입력하셨습니다.");
+        if (result == 1) {
+            System.out.println("음료 삭제가 완료되었습니다.");
+        } else {
+            System.out.println("음료 삭제에 실패했습니다.");
         }
     }
 
+    private static void updateBeverage() {
+        int result = bs.modifyBeverage(reformBev());
+
+        if (result == 1) {
+            System.out.println("움료 정보 수정이 완료되었습니다.");
+        } else {
+            System.out.println("음료 정보 수정에 실패했습니다.");
+        }
+    }
+
+    private static void registBeverage() {
+        Beverage newBeverage = bs.registBeverage(registBev());
+
+        if (newBeverage != null) {
+            System.out.println("\n음료를 성공적으로 등록했습니다.");
+            System.out.print("[등록한 음료 정보] ");
+            printBeverage(newBeverage);
+        } else {
+            System.out.println("음료 등록을 실패했습니다.");
+        }
+    }
+
+    private static void searchBeverageList() {
+        ArrayList<Beverage> searchBeverageList = bs.findBeverageListBy(searchBevList());
+
+        for (Beverage beverage : searchBeverageList) {
+            printBeverage(beverage);
+        }
+
+    }
+
+    private static void searchBeverage() {
+        Beverage selectBeverage = new Beverage();
+        int findType = displaySearchMenu();
+        switch (findType) {
+            case 1: selectBeverage = bs.findBeverageByBevNo(chooseBevNo()); break;
+            case 2: selectBeverage = bs.findBeverageByBevName(chooseBevName()); break;
+            default:
+                System.out.println("잘못된 번호를 입력하셨습니다.");
+        }
+
+        if (selectBeverage != null) {
+            System.out.print("\n[조회한 음료 정보] ");
+            printBeverage(selectBeverage);
+        } else {
+            System.out.println("해당하는 음료가 존재하지 않습니다.");
+        }
+
+    }
+
     private static void getAllBeverages() {
-        bs.findAllBeverages();
+        ArrayList<Beverage> findBeverages = bs.findAllBeverages();
+
+        System.out.println("[모든 음료 정보]");
+        for (Beverage beverages : findBeverages) {
+            System.out.print("[" + beverages.getBevNo() + "번 음료 정보] 음료명: " );
+            printBeverage(beverages);
+        }
     }
 
     private static Integer chooseBevNo() {
@@ -281,6 +322,11 @@ public class BeverageController {
                 break;
         }
         return bc;
+    }
+
+    private static void printBeverage(Beverage beverages) {
+        System.out.println("음료명: " + beverages.getName() + " / 가격: " + beverages.getPrice() + "원 / 칼로리: " + beverages.getCalorie()
+                + "kcal / 카테고리: " + beverages.getCagetory() + " / 재고: " + beverages.getStock() + "잔");
     }
 }
 
