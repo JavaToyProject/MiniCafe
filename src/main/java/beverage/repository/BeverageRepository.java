@@ -7,6 +7,7 @@ import beverage.stream.MyObjectOutput;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 public class BeverageRepository {
@@ -88,25 +89,18 @@ public class BeverageRepository {
     }
 
     public Beverage selectBeverageBy(int bevNo) {
-        for (Beverage beverage : beverageArrayList) {
-            if (bevNo == beverage.getBevNo()) {
-                return beverage;
-            }
-        }
-        return null;
+        return beverageArrayList.stream().filter(beverage -> bevNo == beverage.getBevNo())
+                                    .findFirst()
+                                    .orElse(null);
     }
 
     public Beverage selectBeverageBy(String bevName) {
-        for (Beverage beverage : beverageArrayList) {
-            if (Objects.equals(beverage.getName(), bevName)) {
-                return beverage;
-            }
-        }
-        return null;
+        return beverageArrayList.stream().filter(beverage -> Objects.equals(bevName, beverage.getName()))
+                                    .findFirst()
+                                    .orElse(null);
     }
 
     public int selectLastBeverageNo() {
-
         Beverage lastBeverage = beverageArrayList.get(beverageArrayList.size()-1);
         return lastBeverage.getBevNo();
     }
@@ -178,38 +172,20 @@ public class BeverageRepository {
     }
 
     public ArrayList<Beverage> selectBeverageListByCategory(BeverageCategory bc) {
-        ArrayList<Beverage> filterBeverageList = new ArrayList<>();
-
-        for (Beverage beverage : beverageArrayList) {
-            if (bc == beverage.getCagetory()) {
-                filterBeverageList.add(beverage);
-            }
-        }
-
-        return filterBeverageList;
+        return beverageArrayList.stream()
+                .filter(beverage -> bc == beverage.getCagetory())
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public ArrayList<Beverage> selectBeverageListByUpperPrice(int price) {
-        ArrayList<Beverage> filterBeverageList = new ArrayList<>();
-
-        for (Beverage beverage : beverageArrayList) {
-            if (price <= beverage.getPrice()) {
-                filterBeverageList.add(beverage);
-            }
-        }
-
-        return filterBeverageList;
+        return beverageArrayList.stream()
+                .filter(beverage -> price <= beverage.getPrice())
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public ArrayList<Beverage> selectBeverageListByLowerPrice(int price) {
-        ArrayList<Beverage> filterBeverageList = new ArrayList<>();
-
-        for (Beverage beverage : beverageArrayList) {
-            if (price >= beverage.getPrice()) {
-                filterBeverageList.add(beverage);
-            }
-        }
-
-        return filterBeverageList;
+        return beverageArrayList.stream()
+                .filter(beverage -> price >= beverage.getPrice())
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }
