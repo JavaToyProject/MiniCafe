@@ -1,4 +1,4 @@
-package minicafe.member.run;
+package member.run;
 
 import member.aggregate.Member;
 import member.service.MemberService;
@@ -10,7 +10,10 @@ public class Application {
     private static final MemberService ms = new MemberService();
 
     public static void main(String[] args) {
+        displayMemberMenu();
+    }
 
+    public static void displayMemberMenu() {
         Scanner sc = new Scanner(System.in);
 
         while (true) {
@@ -31,13 +34,12 @@ public class Application {
                 case 3: ms.registMember(signUp());          break;
                 case 4: ms.registMember(updateInfo());      break;
                 case 5: ms.removeMember(inputPhoneNo());    break;
-                case 9: break;
+                case 9: return;
                 default:
                     System.out.println("잘못된 입력!!");
             }
             if (input == 9) break;
         }
-
     }
 
     private static Member updateInfo() {
