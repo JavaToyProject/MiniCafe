@@ -1,7 +1,7 @@
-package minicafe.member.service;
+package member.service;
 
-import minicafe.member.aggregate.Member;
-import minicafe.member.repository.MemberRepository;
+import member.aggregate.Member;
+import member.repository.MemberRepository;
 
 import java.util.ArrayList;
 

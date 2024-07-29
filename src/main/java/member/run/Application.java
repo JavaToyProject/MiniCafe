@@ -1,7 +1,7 @@
 package minicafe.member.run;
 
-import minicafe.member.aggregate.Member;
-import minicafe.member.service.MemberService;
+import member.aggregate.Member;
+import member.service.MemberService;
 
 import java.util.Scanner;
 

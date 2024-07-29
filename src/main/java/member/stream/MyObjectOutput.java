@@ -1,4 +1,4 @@
-package minicafe.member.stream;
+package member.stream;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;

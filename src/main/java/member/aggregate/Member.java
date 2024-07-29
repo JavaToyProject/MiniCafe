@@ -1,4 +1,4 @@
-package minicafe.member.aggregate;
+package member.aggregate;
 
 import java.io.Serializable;
 import java.util.Arrays;

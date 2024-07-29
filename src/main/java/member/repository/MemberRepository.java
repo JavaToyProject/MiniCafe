@@ -1,7 +1,7 @@
-package minicafe.member.repository;
+package member.repository;
 
-import minicafe.member.aggregate.Member;
-import minicafe.member.stream.MyObjectOutput;
+import member.aggregate.Member;
+import member.stream.MyObjectOutput;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ public class MemberRepository {
     private ArrayList<Member> memberList = new ArrayList<>();
 
     public MemberRepository() {
-        File file = new File("src/main/java/minicafe/member/db/member.dat");
+        File file = new File("src/main/java/member/db/member.dat");
 
         if (!file.exists()) {
             ArrayList<Member> defaultMembers = new ArrayList<>();
@@ -94,7 +94,7 @@ public class MemberRepository {
             moo = new MyObjectOutput(
                     new BufferedOutputStream(
                             new FileOutputStream(
-                                    "src/main/java/minicafe/member/db/member.dat",
+                                    "src/main/java/member/db/member.dat",
                                     true)));
             moo.writeObject(newMember);
             memberList.add(newMember);
@@ -122,7 +122,7 @@ public class MemberRepository {
 
                 memberList.set(i, member);
 
-                File file = new File("src/main/java/minicafe/member/db/member.dat");
+                File file = new File("src/main/java/member/db/member.dat");
                 saveMembers(file, memberList);
 
                 if (beforeMem.equals(member)) return 1;
@@ -136,7 +136,7 @@ public class MemberRepository {
             if (memberList.get(i).getPhone().compareTo(removePhone)==0) {
                 memberList.remove(i);
 
-                File file = new File("src/main/java/minicafe/member/db/member.dat");
+                File file = new File("src/main/java/member/db/member.dat");
                 saveMembers(file, memberList);
                 return 1;
             }
