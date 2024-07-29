@@ -32,7 +32,7 @@ public class Application {
                 case 3:
                     OrderApplication();
                 case 0:                     // 프로그램 종료
-                    System.out.println("음료 관리 프로그램을 종료합니다.");
+                    System.out.println("카페 관리 프로그램을 종료합니다.");
                     return;
                 default:
                     System.out.println("번호를 잘못 입력하셨습니다.");
