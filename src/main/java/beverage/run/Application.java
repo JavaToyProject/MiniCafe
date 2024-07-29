@@ -1,7 +1,7 @@
-package minicafe.beverage.run;
+package beverage.run;
 
-import static minicafe.beverage.run.BeverageController.displayMainMenu;
-import static minicafe.beverage.run.BeverageController.handleMainMenu;
+import static beverage.run.BeverageController.displayMainMenu;
+import static beverage.run.BeverageController.handleMainMenu;
 
 public class Application {
     // 임시

@@ -1,8 +1,8 @@
-package minicafe.beverage.run;
+package beverage.run;
 
-import minicafe.beverage.aggregate.Beverage;
-import minicafe.beverage.aggregate.BeverageCategory;
-import minicafe.beverage.service.BeverageService;
+import beverage.aggregate.Beverage;
+import beverage.aggregate.BeverageCategory;
+import beverage.service.BeverageService;
 
 import java.util.ArrayList;
 import java.util.Scanner;

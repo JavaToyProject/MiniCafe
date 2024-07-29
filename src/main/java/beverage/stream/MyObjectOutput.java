@@ -1,4 +1,4 @@
-package minicafe.beverage.stream;
+package beverage.stream;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;

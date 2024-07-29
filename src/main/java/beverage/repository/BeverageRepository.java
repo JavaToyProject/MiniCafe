@@ -1,12 +1,13 @@
-package minicafe.beverage.repository;
+package beverage.repository;
 
-import minicafe.beverage.aggregate.Beverage;
-import minicafe.beverage.aggregate.BeverageCategory;
-import minicafe.beverage.stream.MyObjectOutput;
+import beverage.aggregate.Beverage;
+import beverage.aggregate.BeverageCategory;
+import beverage.stream.MyObjectOutput;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
+
 
 public class BeverageRepository {
 
@@ -18,7 +19,7 @@ public class BeverageRepository {
      *  3. beverageArrayList에 음료 정보 저장
      * */
     public BeverageRepository() {
-        File file = new File("src/main/java/minicafe/beverage/db/beverageDB.dat");
+        File file = new File("src/main/java/beverage/db/beverageDB.dat");
 
         if (!file.exists()) {
             ArrayList<Beverage> defaultBeverage = new ArrayList<>();
@@ -115,7 +116,7 @@ public class BeverageRepository {
         /* 개인필기. 헤더 없이 파일에 추가하고, 수정된 파일로 beverageArrayList 업데이트해야 함 */
 
         int result = 0;
-        File file = new File("src/main/java/minicafe/beverage/db/beverageDB.dat");
+        File file = new File("src/main/java/beverage/db/beverageDB.dat");
 
         MyObjectOutput moo = null;
 
@@ -152,7 +153,7 @@ public class BeverageRepository {
                 if (reformBeverage.getStock() != 0) beverage.setStock(reformBeverage.getStock());
 
                 // 수정된 beverageArrayList 전체를 파일에 덮어씌우기
-                File file = new File("src/main/java/minicafe/beverage/db/beverageDB.dat");
+                File file = new File("src/main/java/beverage/db/beverageDB.dat");
                 saveBeverages(file, beverageArrayList);
 
                 return 1;
@@ -167,7 +168,7 @@ public class BeverageRepository {
                 beverageArrayList.remove(i);
 
                 // 삭제된 beverageArrayList 전체를 파일에 덮어씌우기
-                File file = new File("src/main/java/minicafe/beverage/db/beverageDB.dat");
+                File file = new File("src/main/java/beverage/db/beverageDB.dat");
                 saveBeverages(file, beverageArrayList);
 
                 return 1;

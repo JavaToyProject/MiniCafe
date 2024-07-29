@@ -1,8 +1,8 @@
-package minicafe.beverage.service;
+package beverage.service;
 
-import minicafe.beverage.aggregate.Beverage;
-import minicafe.beverage.aggregate.BeverageCategory;
-import minicafe.beverage.repository.BeverageRepository;
+import beverage.aggregate.Beverage;
+import beverage.aggregate.BeverageCategory;
+import beverage.repository.BeverageRepository;
 
 import java.util.ArrayList;
 

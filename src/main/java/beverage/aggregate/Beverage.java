@@ -1,4 +1,4 @@
-package minicafe.beverage.aggregate;
+package beverage.aggregate;
 
 
 import java.io.Serializable;
