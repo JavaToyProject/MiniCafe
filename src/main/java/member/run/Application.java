@@ -1,6 +1,7 @@
 package member.run;
 
 import beverage.aggregate.Beverage;
+import beverage.service.BeverageService;
 import member.aggregate.Member;
 import member.service.MemberService;
 
@@ -11,6 +12,7 @@ import java.util.Scanner;
 public class Application {
 
     private static final MemberService ms = new MemberService();
+    private static final BeverageService bs = new BeverageService();
 
     public static void main(String[] args) {
         displayMemberMenu();
@@ -88,27 +90,58 @@ public class Application {
                             System.out.println("====== 찜 메뉴 수정 ======");
                             System.out.println("1. 찜 메뉴 추가");
                             System.out.println("2. 찜 메뉴 삭제");
-                            System.out.println("9. 수정 완료");
+                            System.out.println("9. 찜 메뉴 수정 종료");
+                            System.out.print("메뉴를 선택해주세요: ");
                             int chNo = sc.nextInt();
                             sc.nextLine();
+                            ArrayList<Integer> updateBeverageList = updateMember.getBeverages(); // 업데이트된 찜 메뉴 목록 관리
                             switch (chNo) {
                                 case 1:
-                                    System.out.print("추가 할 찜 메뉴 입력: ");
+                                    // 음료 목록 출력
+                                    System.out.println("====== 음료 목록 ======");
+                                    System.out.println("찜할 음료의 번호를 선택해주세요");
+                                    ArrayList<Beverage> beverageArrayList = bs.findAllBeverages();
+                                    for (Beverage beverage : beverageArrayList) {
+                                        printBeverage(beverage);
+                                    }
+
+                                    // 추가할 찜 메뉴 번호 입력받기
+                                    System.out.print("추가 할 찜 메뉴 번호 입력: ");
                                     int addBeverageNo = sc.nextInt();
 
-                                    ArrayList<Integer> after = new ArrayList<>();
-                                    after.add(addBeverageNo);
-                                    updateMember.setBeverages(after);
-
+                                    // 입력받은 번호가 음료 목록에 존재하는지 확인
+                                    Beverage addBeverage = bs.findBeverageByBevNo(addBeverageNo);
+                                    if(addBeverage != null) {
+                                        // 현재 찜 목록에 존재하지 않는지 확인 (중복 체크)
+                                        if (!updateBeverageList.contains(Integer.valueOf(addBeverageNo))) {
+                                            updateBeverageList.add(addBeverage.getBevNo()); // updateBeverageList에 추가
+                                        } else {
+                                            System.out.println("현재 찜 목록에 존재하는 음료입니다");
+                                        }
+                                    } else {
+                                        System.out.println("해당 음료는 목록에 존재하지 않습니다.");
+                                    }
                                     break;
                                 case 2:
+                                    // 현재 찜 메뉴 출력
+                                    System.out.println("====== 현재 찜한 음료 목록 ======");
+                                    System.out.println("삭제할 음료의 번호를 선택해주세요");
+                                    for (int beverageNo : updateBeverageList) {
+                                        printBeverage(bs.findBeverageByBevNo(beverageNo));
+                                    }
+
+                                    // 삭제할 찜 메뉴 번호 입력받기
                                     System.out.print("삭제 할 찜 메뉴 입력: ");
                                     int removeBeverageNo = sc.nextInt();
 
-                                    ArrayList<Integer> remove = updateMember.getBeverages();
-                                    remove.remove(removeBeverageNo);
-                                    System.out.println(remove.toString()); // 출력
-                                    updateMember.setBeverages(remove);
+                                    // 입력받은 번호가 음료 목록에 존재하는지 확인
+                                    Beverage removeBeverage = bs.findBeverageByBevNo(removeBeverageNo);
+                                    if(removeBeverage != null) {
+                                        updateBeverageList.remove(Integer.valueOf(removeBeverageNo)); // 존재한다면 updateBeverageList에서 삭제
+                                    } else {
+                                        System.out.println("해당 음료는 목록에 존재하지 않습니다.");
+                                    }
+
                                     break;
                                 case 9:
                                     System.out.println("찜 메뉴 수정 종료");
@@ -167,5 +200,10 @@ public class Application {
         Scanner sc = new Scanner(System.in);
         System.out.print("회원 핸드폰번호 입력: ");
         return sc.nextLine();
+    }
+
+    private static void printBeverage(Beverage beverages) {
+        System.out.println("[" + beverages.getBevNo() + "번 음료] " + beverages.getName() + " / 가격: " + beverages.getPrice() + "원 / 칼로리: " + beverages.getCalorie()
+                + "kcal / 카테고리: " + beverages.getCagetory());
     }
 }
