@@ -5,6 +5,8 @@ import member.stream.MyObjectOutput;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MemberRepository {
 
@@ -16,9 +18,9 @@ public class MemberRepository {
         if (!file.exists()) {
             ArrayList<Member> defaultMembers = new ArrayList<>();
 
-            defaultMembers.add(new Member(1, "유관순", "대한독립만세", "01012345678", 8, new String[]{"아메리카노"}));
-            defaultMembers.add(new Member(2, "홍길동", "동에번쩍", "01098765432", 3, new String[]{"모카프라푸치노", "에스프레소"}));
-            defaultMembers.add(new Member(3, "신사임당", "오만원", "01056325478", 10, new String[]{"녹차라테", "자몽에이드"}));
+            defaultMembers.add(new Member(1, "유관순", "대한독립만세", "01012345678", 8, new ArrayList<>(List.of(2))));
+            defaultMembers.add(new Member(2, "홍길동", "동에번쩍", "01098765432", 3, new ArrayList<>(List.of(3, 5))));
+            defaultMembers.add(new Member(3, "신사임당", "오만원", "01056325478", 10, new ArrayList<>(List.of(2, 3, 4))));
 
             saveMembers(file, defaultMembers);
         }
@@ -98,7 +100,6 @@ public class MemberRepository {
                                     true)));
             moo.writeObject(newMember);
             memberList.add(newMember);
-            System.out.println(memberList);
             result = 1;
         } catch (IOException e) {
             throw new RuntimeException(e);

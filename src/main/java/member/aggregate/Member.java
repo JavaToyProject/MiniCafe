@@ -1,6 +1,7 @@
 package member.aggregate;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Member implements Serializable {
@@ -9,18 +10,18 @@ public class Member implements Serializable {
     private String nickName;
     private String phone;
     private int stamps;
-    private String[] beverages;
+    private ArrayList<Integer> beverages;
 
     public Member() {}
 
-    public Member(String name, String nickName, String phone, String[] beverages) {
+    public Member(String name, String nickName, String phone, ArrayList<Integer> beverages) {
         this.name = name;
         this.nickName = nickName;
         this.phone = phone;
         this.beverages = beverages;
     }
 
-    public Member(int memNo, String name, String nickName, String phone, int stamps, String[] beverages) {
+    public Member(int memNo, String name, String nickName, String phone, int stamps, ArrayList<Integer> beverages) {
         this.memNo = memNo;
         this.name = name;
         this.nickName = nickName;
@@ -69,11 +70,11 @@ public class Member implements Serializable {
         this.stamps = stamps;
     }
 
-    public String[] getBeverages() {
+    public ArrayList<Integer> getBeverages() {
         return beverages;
     }
 
-    public void setBeverages(String[] beverages) {
+    public void setBeverages(ArrayList<Integer> beverages) {
         this.beverages = beverages;
     }
 
@@ -85,7 +86,7 @@ public class Member implements Serializable {
                 ", nickName='" + nickName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", stamps=" + stamps +
-                ", beverages=" + Arrays.toString(beverages) +
+                ", beverages=" + beverages +
                 '}';
     }
 }

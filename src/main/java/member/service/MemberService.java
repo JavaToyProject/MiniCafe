@@ -28,19 +28,31 @@ public class MemberService {
     }
 
     public void registMember(Member member) {
-        Member getMember = mr.selectOneMember(member.getPhone());
+        int lastMemNo = mr.selectLastMemNo();
+        member.setMemNo(lastMemNo + 1);
+        int result = mr.insertMember(member);
 
-        if (getMember == null) {
-            int lastMemNo = mr.selectLastMemNo();
-            member.setMemNo(lastMemNo + 1);
-
-            int result = mr.insertMember(member);
-            if (result == 1)
-                System.out.println(member.getName() + "님 회원가입 완료!!");
+        if (result == 1) {
+            System.out.println(member.getName() + "님 회원가입 완료!!");
         } else {
+            System.out.println("회원가입에 실패했습니다");
+        }
+
+    }
+
+    public void updateMember(Member member) {
+        if (member == null) {
+            System.out.println("회원정보 수정에 실패했습니다. 정확한 회원번호를 입력해 주세요.");
+        } else {
+            Member getMember = mr.selectOneMember(member.getPhone());
+            System.out.println(getMember);
+
             int result = mr.updateMember(member);
-            if (result == 1)
+            if (result == 1) {
                 System.out.println(member.getName() + "님 회원정보 수정 완료!!");
+            } else {
+                System.out.println("회원정보 수정에 실패했습니다.");
+            }
         }
     }
 
