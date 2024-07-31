@@ -1,8 +1,11 @@
 package member.run;
 
+import beverage.aggregate.Beverage;
 import member.aggregate.Member;
 import member.service.MemberService;
 
+import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Application {
@@ -32,7 +35,7 @@ public class Application {
                 case 1: ms.findAllMembers();                break;
                 case 2: ms.findOneMember(inputPhoneNo());   break;
                 case 3: ms.registMember(signUp());          break;
-                case 4: ms.registMember(updateInfo());      break;
+                case 4: ms.updateMember(updateInfo());      break;
                 case 5: ms.removeMember(inputPhoneNo());    break;
                 case 9: return;
                 default:
@@ -47,7 +50,7 @@ public class Application {
         String name = null;
         String nick = null;
         String phoneNo = null;
-        String[] beverages = null;
+        ArrayList<ImageIcon> beverages = null;
 
         int inputNo = 0;
 
@@ -57,7 +60,6 @@ public class Application {
         String phone = sc.nextLine();
 
         updateMember = ms.findOneMemberInfo(phone);
-        System.out.println(updateMember);
 
         if (updateMember != null) {
             while (true) {
@@ -80,6 +82,7 @@ public class Application {
                         System.out.print("닉네임 입력: ");
                         nick = sc.nextLine();
                         updateMember.setNickName(nick);
+                        break;
                     case 3:
                         while (true) {
                             System.out.println("====== 찜 메뉴 수정 ======");
@@ -91,31 +94,20 @@ public class Application {
                             switch (chNo) {
                                 case 1:
                                     System.out.print("추가 할 찜 메뉴 입력: ");
-                                    String addMenu = sc.nextLine();
-                                    int len = updateMember.getBeverages().length;
-                                    String[] after = new String[len+1];
-                                    for (int i = 0; i < len+1; i++) {
-                                        if (i == len) {
-                                            after[i] = addMenu;
-                                            break;
-                                        }
-                                        after[i] = updateMember.getBeverages()[i];
-                                    }
+                                    int addBeverageNo = sc.nextInt();
+
+                                    ArrayList<Integer> after = new ArrayList<>();
+                                    after.add(addBeverageNo);
                                     updateMember.setBeverages(after);
+
                                     break;
                                 case 2:
                                     System.out.print("삭제 할 찜 메뉴 입력: ");
-                                    String removeMenu = sc.nextLine();
-                                    int rlen = updateMember.getBeverages().length;
-                                    String[] remove = new String[rlen-1];
-                                    int j = 0;
-                                    for (int i = 0; i < rlen; i++) {
-                                        if (removeMenu.compareTo(updateMember.getBeverages()[i]) != 0){
-                                            remove[j] = updateMember.getBeverages()[i];
-                                            j += 1;
-                                        }
-                                    }
-                                    System.out.println(remove.toString());
+                                    int removeBeverageNo = sc.nextInt();
+
+                                    ArrayList<Integer> remove = updateMember.getBeverages();
+                                    remove.remove(removeBeverageNo);
+                                    System.out.println(remove.toString()); // 출력
                                     updateMember.setBeverages(remove);
                                     break;
                                 case 9:
@@ -128,7 +120,7 @@ public class Application {
                         }
                         break;//
                     case 9:
-                        System.out.println("회원정보 수정 종료");   break;
+                        System.out.println("회원정보 수정 종료"); break;
                     default:
                         System.out.println("잘못된 입력!!");
                 }
@@ -156,11 +148,12 @@ public class Application {
         int length = sc.nextInt();
         sc.nextLine();  // 버퍼의 개행문자 처리용(엔터 입력 제거)
 
-        String[] beverages = new String[length];
+//        String[] beverages = new String[length];
+        ArrayList<Integer> beverages = new ArrayList<>();
         for (int i = 0; i < length; i++) {
             System.out.print((i+1) + "번째 찜 음료 입력: ");
-            String input = sc.nextLine();
-            beverages[i] = input;
+            int input = sc.nextInt();
+            beverages.add(input);
         }
 
         newMember = new Member(name, nick, phone, beverages);
