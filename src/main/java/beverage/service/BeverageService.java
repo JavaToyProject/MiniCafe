@@ -18,7 +18,7 @@ public class BeverageService {
         return findBeverages;
     }
 
-    public Beverage findBeverageByBevNo(Integer searchBevNo) { // 음료 번호로 검색하는 경우
+    public Beverage findBeverageByBevNo(int searchBevNo) { // 음료 번호로 검색하는 경우
         Beverage selectBeverage = br.selectBeverageBy(searchBevNo);
         return selectBeverage;
     }

@@ -129,7 +129,7 @@ public class BeverageController {
         }
     }
 
-    private static Integer chooseBevNo() {
+    private static int chooseBevNo() {
         Scanner sc = new Scanner(System.in);
         System.out.print("검색할 음료번호를 입력해주세요: ");
         Integer bevNo = sc.nextInt();
