@@ -10,18 +10,16 @@ public class Beverage implements Serializable {
     private int price;
     private int calorie;
     private BeverageCategory cagetory;  // 음료카테고리(COFFEE, LATTE, BLENDED, TEA)
-    private int stock;
 
     public Beverage() {
     }
 
-    public Beverage(int bevNo, String name, int price, int calorie, BeverageCategory cagetory, int stock) {
+    public Beverage(int bevNo, String name, int price, int calorie, BeverageCategory cagetory) {
         BevNo = bevNo;
         this.name = name;
         this.price = price;
         this.calorie = calorie;
         this.cagetory = cagetory;
-        this.stock = stock;
     }
 
     public int getBevNo() {
@@ -64,14 +62,6 @@ public class Beverage implements Serializable {
         this.cagetory = cagetory;
     }
 
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
     @Override
     public String toString() {
         return "Beverage{" +
@@ -80,7 +70,6 @@ public class Beverage implements Serializable {
                 ", price=" + price +
                 ", calorie=" + calorie +
                 ", cagetory=" + cagetory +
-                ", stock=" + stock +
                 '}';
     }
 }

@@ -18,7 +18,7 @@ public class BeverageService {
         return findBeverages;
     }
 
-    public Beverage findBeverageByBevNo(Integer searchBevNo) { // 음료 번호로 검색하는 경우
+    public Beverage findBeverageByBevNo(int searchBevNo) { // 음료 번호로 검색하는 경우
         Beverage selectBeverage = br.selectBeverageBy(searchBevNo);
         return selectBeverage;
     }
@@ -29,14 +29,18 @@ public class BeverageService {
     }
 
     public Beverage registBeverage(Beverage newBeverage) {
-        int lastBevNo = br.selectLastBeverageNo();
-        newBeverage.setBevNo(lastBevNo + 1);
-        int result = br.insertBeverage(newBeverage);
-
-        if (result == 1) {
-            return newBeverage;
-        } else {
+        if (newBeverage == null) {
             return null;
+        } else {
+            int lastBevNo = br.selectLastBeverageNo();
+            newBeverage.setBevNo(lastBevNo + 1);
+            int result = br.insertBeverage(newBeverage);
+
+            if (result == 1) {
+                return newBeverage;
+            } else {
+                return null;
+            }
         }
     }
 
@@ -50,41 +54,32 @@ public class BeverageService {
         return result;
     }
 
-    public ArrayList<Beverage> findBeverageListBy(int[] filterArr) {
+    public ArrayList<Beverage> findBeverageListByCategory(int searchCategory) {
         ArrayList<Beverage> searchBeverageList = new ArrayList<>();
-        int filterType = filterArr[0];
-        int value = filterArr[1];
 
-        switch (filterType) {
-            case 1: // 특정 카테고리 음료만 조회
-                BeverageCategory bc = null;
-                switch (value) {
-                    case 1:
-                        bc = BeverageCategory.COFFEE;
-                        break;
-                    case 2:
-                        bc = BeverageCategory.LATTE;
-                        break;
-                    case 3:
-                        bc = BeverageCategory.BLENDED;
-                        break;
-                    case 4:
-                        bc = BeverageCategory.TEA;
-                        break;
-                }
-                searchBeverageList.addAll(br.selectBeverageListByCategory(bc)); // 깊은 복사
-                break;
+        BeverageCategory bc = null;
 
-            case 2: // 특정 금액 이상의 음료만 조회
-                searchBeverageList.addAll(br.selectBeverageListByUpperPrice(value));
+        switch (searchCategory) {
+            case 1:
+                bc = BeverageCategory.COFFEE;
                 break;
-            case 3: // 특정 금액 이하의 음료만 조회
-                searchBeverageList.addAll(br.selectBeverageListByLowerPrice(value));
+            case 2:
+                bc = BeverageCategory.LATTE;
                 break;
-            case 0: // 메인 화면으로 돌아가기
+            case 3:
+                bc = BeverageCategory.BLENDED;
+                break;
+            case 4:
+                bc = BeverageCategory.TEA;
                 break;
         }
+        searchBeverageList.addAll(br.selectBeverageListByCategory(bc)); // 깊은 복사
         return searchBeverageList;
     }
 
+    public ArrayList<Beverage> findBeverageListByBevName(String searchBevName) {
+        ArrayList<Beverage> searchBeverageList = new ArrayList<>();
+        searchBeverageList.addAll(br.selectBeverageListbyBevName(searchBevName));
+        return searchBeverageList;
+    }
 }
