@@ -277,6 +277,11 @@ public class BeverageController {
         System.out.print("등록할 음료의 이름을 입력해주세요: ");
         String name = sc.nextLine();
 
+        // 음료명 중복 확인 (존재하는 음료일 경우 추가 불가)
+        if (bs.findBeverageByBevName(name) != null) {
+            return null;
+        }
+
         System.out.print(name + "의 가격을 입력해주세요: ");
         int price = sc.nextInt();
 

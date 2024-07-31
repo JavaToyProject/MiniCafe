@@ -29,14 +29,18 @@ public class BeverageService {
     }
 
     public Beverage registBeverage(Beverage newBeverage) {
-        int lastBevNo = br.selectLastBeverageNo();
-        newBeverage.setBevNo(lastBevNo + 1);
-        int result = br.insertBeverage(newBeverage);
-
-        if (result == 1) {
-            return newBeverage;
-        } else {
+        if (newBeverage == null) {
             return null;
+        } else {
+            int lastBevNo = br.selectLastBeverageNo();
+            newBeverage.setBevNo(lastBevNo + 1);
+            int result = br.insertBeverage(newBeverage);
+
+            if (result == 1) {
+                return newBeverage;
+            } else {
+                return null;
+            }
         }
     }
 
