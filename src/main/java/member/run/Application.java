@@ -171,6 +171,9 @@ public class Application {
 
         System.out.print("핸드폰번호 입력('-'생략): ");
         String phone = sc.nextLine();
+        if (ms.findOneMemberInfo(phone) != null) { // 핸드폰번호 중복체크 (존재하는 경우 가입X)
+            return null;
+        }
 
         // 음료 목록 출력
         System.out.print("찜 할 음료 개수: ");
