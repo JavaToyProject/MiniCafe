@@ -98,12 +98,7 @@ public class Application {
                             switch (chNo) {
                                 case 1:
                                     // 음료 목록 출력
-                                    System.out.println("====== 음료 목록 ======");
-                                    System.out.println("찜할 음료의 번호를 선택해주세요");
-                                    ArrayList<Beverage> beverageArrayList = bs.findAllBeverages();
-                                    for (Beverage beverage : beverageArrayList) {
-                                        printBeverage(beverage);
-                                    }
+                                    printBeverageList("====== 음료 목록 ======");
 
                                     // 추가할 찜 메뉴 번호 입력받기
                                     System.out.print("추가 할 찜 메뉴 번호 입력: ");
@@ -177,23 +172,41 @@ public class Application {
         System.out.print("핸드폰번호 입력('-'생략): ");
         String phone = sc.nextLine();
 
+        // 음료 목록 출력
         System.out.print("찜 할 음료 개수: ");
         int length = sc.nextInt();
         sc.nextLine();  // 버퍼의 개행문자 처리용(엔터 입력 제거)
+        printBeverageList("====== 찜할 음료 목록 ======");
 
-//        String[] beverages = new String[length];
-        ArrayList<Integer> beverages = new ArrayList<>();
+        ArrayList<Integer> favoriteBeverages = new ArrayList<>();
         for (int i = 0; i < length; i++) {
             System.out.print((i+1) + "번째 찜 음료 입력: ");
-            int input = sc.nextInt();
-            beverages.add(input);
+            int favoriteBeverageNo = sc.nextInt();
+
+            // 입력받은 번호가 음료 목록에 존재하는지 확인
+            Beverage favoriteBeverage = bs.findBeverageByBevNo(favoriteBeverageNo);
+            if(favoriteBeverage != null) {
+                favoriteBeverages.add(favoriteBeverage.getBevNo());
+            } else {
+                System.out.println("해당 음료는 목록에 존재하지 않습니다.");
+                i--; // 다시 입력받기
+            }
         }
 
-        newMember = new Member(name, nick, phone, beverages);
+        newMember = new Member(name, nick, phone, favoriteBeverages);
 
         newMember.setStamps(0);
 
         return newMember;
+    }
+
+    private static void printBeverageList(String x) {
+        System.out.println(x);
+        System.out.println("찜할 음료의 번호를 선택해주세요");
+        ArrayList<Beverage> beverageArrayList = bs.findAllBeverages();
+        for (Beverage beverage : beverageArrayList) {
+            printBeverage(beverage);
+        }
     }
 
     private static String inputPhoneNo() {
