@@ -24,11 +24,11 @@ public class BeverageRepository {
 
         if (!file.exists()) {
             ArrayList<Beverage> defaultBeverage = new ArrayList<>();
-            defaultBeverage.add(new Beverage(1, "아메리카노", 3500, 4, BeverageCategory.COFFEE, 120));
-            defaultBeverage.add(new Beverage(2, "바닐라라떼", 4500, 280, BeverageCategory.LATTE, 80));
-            defaultBeverage.add(new Beverage(3, "카페라떼", 4200, 240, BeverageCategory.LATTE, 80));
-            defaultBeverage.add(new Beverage(4, "딸기스무디", 5300, 460, BeverageCategory.BLENDED, 30));
-            defaultBeverage.add(new Beverage(5, "아이스티", 3800, 180, BeverageCategory.TEA, 40));
+            defaultBeverage.add(new Beverage(1, "아메리카노", 3500, 4, BeverageCategory.COFFEE));
+            defaultBeverage.add(new Beverage(2, "바닐라라떼", 4500, 280, BeverageCategory.LATTE));
+            defaultBeverage.add(new Beverage(3, "카페라떼", 4200, 240, BeverageCategory.LATTE));
+            defaultBeverage.add(new Beverage(4, "딸기스무디", 5300, 460, BeverageCategory.BLENDED));
+            defaultBeverage.add(new Beverage(5, "아이스티", 3800, 180, BeverageCategory.TEA));
 
             saveBeverages(file, defaultBeverage);
         }
@@ -144,7 +144,6 @@ public class BeverageRepository {
                 if (reformBeverage.getPrice() != 0) beverage.setPrice(reformBeverage.getPrice());
                 if (reformBeverage.getCalorie() != 0) beverage.setCalorie(reformBeverage.getCalorie());
                 if (reformBeverage.getCagetory() != null) beverage.setCagetory(reformBeverage.getCagetory());
-                if (reformBeverage.getStock() != 0) beverage.setStock(reformBeverage.getStock());
 
                 // 수정된 beverageArrayList 전체를 파일에 덮어씌우기
                 File file = new File("src/main/java/beverage/db/beverageDB.dat");

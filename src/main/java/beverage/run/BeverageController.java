@@ -248,10 +248,6 @@ public class BeverageController {
                     int category = sc.nextInt();
                     reformBev.setCagetory(getBeverageCategory(category));
                     break;
-                case 5:
-                    System.out.print("수정할 음료 재고 입력: ");
-                    reformBev.setStock(sc.nextInt());
-                    break;
                 case 0:
                     return reformBev;
                 default:
@@ -266,7 +262,6 @@ public class BeverageController {
         System.out.println("| 2. 음료 가격                   |");
         System.out.println("| 3. 음료 칼로리                 |");
         System.out.println("| 4. 음료 카테고리                |");
-        System.out.println("| 5. 음료 재고                   |");
         System.out.println("| 0. 수정 완료(메인 메뉴로 돌아가기) |");
         System.out.println("◣―――――――――――――――――――◢");
         System.out.print("수정할 정보를 선택해주세요: ");
@@ -292,14 +287,10 @@ public class BeverageController {
         int category = sc.nextInt();
         BeverageCategory bc = getBeverageCategory(category);
 
-        System.out.print(name + "의 재고를 입력해주세요: ");
-        int stock = sc.nextInt();
-
         beverage.setName(name);
         beverage.setPrice(price);
         beverage.setCalorie(calorie);
         beverage.setCagetory(bc);
-        beverage.setStock(stock);
 
         return beverage;
     }
@@ -326,7 +317,7 @@ public class BeverageController {
 
     private static void printBeverage(Beverage beverages) {
         System.out.println("음료명: " + beverages.getName() + " / 가격: " + beverages.getPrice() + "원 / 칼로리: " + beverages.getCalorie()
-                + "kcal / 카테고리: " + beverages.getCagetory() + " / 재고: " + beverages.getStock() + "잔");
+                + "kcal / 카테고리: " + beverages.getCagetory());
     }
 }
 
