@@ -17,10 +17,9 @@ public class BeverageController {
         System.out.println("\n◤――― 음료 관리 ―――◥");
         System.out.println("| 1. 음료 전체 조회    |");
         System.out.println("| 2. 음료 검색        |");
-        System.out.println("| 3. 음료 목록 검색    |"); // 특정 기준에 따라 음료 조회
-        System.out.println("| 4. 음료 등록        |");
-        System.out.println("| 5. 음료 정보 수정    |");
-        System.out.println("| 6. 음료 삭제        |");
+        System.out.println("| 3. 음료 등록        |");
+        System.out.println("| 4. 음료 정보 수정    |");
+        System.out.println("| 5. 음료 삭제        |");
         System.out.println("| 0. 프로그램 종료     |");
         System.out.println("◣――――――――――――◢");
         System.out.print("원하는 메뉴를 선택해주세요: ");
@@ -39,15 +38,12 @@ public class BeverageController {
                 searchBeverage();       // 음료 검색
                 break;
             case 3:
-                searchBeverageList();   // 음료 목록 검색
-                break;
-            case 4:
                 registBeverage();       // 음료 등록
                 break;
-            case 5:
+            case 4:
                 updateBeverage();       // 음료 정보 수정
                 break;
-            case 6:
+            case 5:
                 deleteBeverage();       // 음료 삭제
                 break;
             case 0:                     // 프로그램 종료
@@ -91,32 +87,62 @@ public class BeverageController {
         }
     }
 
-    private static void searchBeverageList() {
-        ArrayList<Beverage> searchBeverageList = bs.findBeverageListBy(searchBevList());
-
-        for (Beverage beverage : searchBeverageList) {
-            printBeverage(beverage);
-        }
-
-    }
-
     private static void searchBeverage() {
+        Scanner sc = new Scanner(System.in);
+
         Beverage selectBeverage = new Beverage();
+        ArrayList<Beverage> selectBeverageList = new ArrayList<>();
+
         int findType = displaySearchMenu();
+
         switch (findType) {
-            case 1: selectBeverage = bs.findBeverageByBevNo(chooseBevNo()); break;
-            case 2: selectBeverage = bs.findBeverageByBevName(chooseBevName()); break;
+            case 1: // 음료 번호 조회 (1개)
+                selectBeverage = bs.findBeverageByBevNo(chooseBevNo());
+                if (selectBeverage != null) {
+                    System.out.print("\n[조회한 음료 정보] ");
+                    printBeverage(selectBeverage);
+                } else {
+                    System.out.println("해당하는 음료가 존재하지 않습니다.");
+                }
+                break;
+
+            case 2: // 음료명 조회 (리스트)
+                System.out.print("검색할 음료명을 입력해주세요: ");
+                String searchBevName = sc.nextLine();
+                if (searchBevName.length() < 2) {
+                    System.out.println("검색어를 2글자 이상 입력해 주세요");
+                } else {
+                    selectBeverageList = bs.findBeverageListByBevName(searchBevName);
+                }
+
+                if (!selectBeverageList.isEmpty()) {
+                    System.out.print("\n[조회한 음료 정보]\n");
+                    for (Beverage beverage : selectBeverageList) {
+                        printBeverage(beverage);
+                    }
+                } else {
+                    System.out.println("해당하는 음료가 존재하지 않습니다.");
+                }
+                break;
+            case 3: // 음료 카테고리로 검색 (리스트)
+                System.out.print("검색할 카테고리를 입력해주세요(1: Coffee, 2: Latte, 3: Blended, 4: Tea) : ");
+                int searchCategory = sc.nextInt();
+                selectBeverageList = bs.findBeverageListByCategory(searchCategory);
+
+                if (!selectBeverageList.isEmpty()) {
+                    System.out.print("\n[조회한 음료 정보]\n");
+                    for (Beverage beverage : selectBeverageList) {
+                        printBeverage(beverage);
+                    }
+                } else {
+                    System.out.println("해당하는 음료가 존재하지 않습니다.");
+                }
+                break;
+            case 0:
+                break;
             default:
                 System.out.println("잘못된 번호를 입력하셨습니다.");
         }
-
-        if (selectBeverage != null) {
-            System.out.print("\n[조회한 음료 정보] ");
-            printBeverage(selectBeverage);
-        } else {
-            System.out.println("해당하는 음료가 존재하지 않습니다.");
-        }
-
     }
 
     private static void getAllBeverages() {
@@ -137,14 +163,6 @@ public class BeverageController {
         return bevNo;
     }
 
-    private static String chooseBevName() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("검색할 음료명을 입력해주세요: ");
-        String bevName = sc.nextLine();
-        System.out.println("――――――――――――――");
-        return bevName;
-    }
-
     private static int chooseRemoveBevNo () {
         Scanner sc = new Scanner(System.in);
         System.out.print("삭제할 음료번호를 입력해주세요: ");
@@ -157,66 +175,14 @@ public class BeverageController {
         System.out.println("◤――― 음료 검색 ―――◥");
         System.out.println("| 1. 음료 번호 조회    |");
         System.out.println("| 2. 음료명 조회       |");
+        System.out.println("| 3. 음료 카테고리 조회 |");
+        System.out.println("| 0. 검색 완료        |");
         System.out.println("◣――――――――――――◢");
         System.out.print("검색할 기준을 입력해주세요: ");
 
         int searchType = sc.nextInt();
         return searchType;
     }
-
-    private static int[] searchBevList() {
-        int input = displaySearchCriteriaMenu();
-        int[] citeriaArr = {0, 0}; // 필터의 종류와 추가 정보를 저장
-
-        citeriaArr = handleSearchCriteriaMenu(input, citeriaArr);
-        if (citeriaArr != null) return citeriaArr;
-
-        return citeriaArr;
-    }
-
-    private static int displaySearchCriteriaMenu() {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("◤――――― 음료 목록 검색 ―――――◥");
-        System.out.println("| 1. 특정 카테고리 음료만 조회      |");
-        System.out.println("| 2. 특정 금액 이상의 음료만 조회    |");
-        System.out.println("| 3. 특정 금액 이하의 음료만 조회    |");
-        System.out.println("| 0. 메인 화면으로 돌아가기         |");
-        System.out.println("◣―――――――――――――――――――◢");
-        System.out.print("검색할 기준을 입력해주세요: ");
-
-        int input = sc.nextInt();
-        return input;
-    }
-
-    private static int[] handleSearchCriteriaMenu(int input, int[] citeriaArr) {
-        Scanner sc = new Scanner(System.in);
-
-        switch (input) {
-            case 1:
-                System.out.print("검색할 카테고리를 입력해주세요(1: Coffee, 2: Latte, 3: Blended, 4: Tea) : ");
-                citeriaArr[0] = 1;
-                citeriaArr[1] = sc.nextInt();
-                break;
-            case 2:
-                System.out.print("검색할 금액을 입력해주세요: ");
-                citeriaArr[0] = 2;
-                citeriaArr[1] = sc.nextInt();
-                break;
-            case 3:
-                System.out.print("검색할 금액을 입력해주세요: ");
-                citeriaArr[0] = 3;
-                citeriaArr[1] = sc.nextInt();
-                break;
-            case 0:
-                return citeriaArr;
-            default:
-                System.out.println("잘못된 번호를 입력하셨습니다.");
-        }
-        System.out.println("―――――――――――――――――");
-        return citeriaArr;
-    }
-
 
     private static Beverage reformBev() {
         Beverage reformBev = new Beverage();

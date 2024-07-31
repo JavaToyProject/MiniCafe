@@ -6,7 +6,9 @@ import beverage.stream.MyObjectOutput;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 
@@ -176,15 +178,14 @@ public class BeverageRepository {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public ArrayList<Beverage> selectBeverageListByUpperPrice(int price) {
-        return beverageArrayList.stream()
-                .filter(beverage -> price <= beverage.getPrice())
-                .collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    public ArrayList<Beverage> selectBeverageListByLowerPrice(int price) {
-        return beverageArrayList.stream()
-                .filter(beverage -> price >= beverage.getPrice())
-                .collect(Collectors.toCollection(ArrayList::new));
+    public ArrayList<Beverage> selectBeverageListbyBevName(String searchBevName) {
+        ArrayList<Beverage> resultBeverageList = new ArrayList<>();
+        for (Beverage beverage : beverageArrayList) {
+            // 만약 음료명이 포함된다면 반환 리스트에 추가
+            if (beverage.getName().contains(searchBevName)) {
+                resultBeverageList.add(beverage);
+            }
+        }
+        return resultBeverageList;
     }
 }
