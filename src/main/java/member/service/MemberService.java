@@ -11,20 +11,14 @@ public class MemberService {
 
     public MemberService() {}
 
-    public void findAllMembers() {
+    public ArrayList<Member> findAllMembers() {
         ArrayList<Member> findMembers = mr.selectAllMembers();
-
-        for (Member member : findMembers) {
-            System.out.println(member.toString());
-        }
+        return findMembers;
     }
 
-    public void findOneMember(String memPhoneNo) {
+    public Member findOneMember(String memPhoneNo) {
         Member selectMember = mr.selectOneMember(memPhoneNo);
-        if (selectMember != null)
-            System.out.println(selectMember.toString());
-        else
-            System.out.println("존재하지 않는 회원 핸드폰번호입니다.");
+        return selectMember;
     }
 
     public void registMember(Member member) {
@@ -47,9 +41,6 @@ public class MemberService {
         if (member == null) {
             System.out.println("회원정보 수정에 실패했습니다. 정확한 회원번호를 입력해 주세요.");
         } else {
-            Member getMember = mr.selectOneMember(member.getPhone());
-            System.out.println(getMember);
-
             int result = mr.updateMember(member);
             if (result == 1) {
                 System.out.println(member.getName() + "님 회원정보 수정 완료!!");
@@ -59,21 +50,8 @@ public class MemberService {
         }
     }
 
-    public Member findOneMemberInfo(String phone) {
-        Member selectMember = mr.selectOneMember(phone);
-        if (selectMember != null)
-            return selectMember;
-        else {
-            System.out.println("존재하지 않는 회원 핸드폰번호입니다.");
-            return null;
-        }
-    }
-
-    public void removeMember(String removePhone) {
+    public int removeMember(String removePhone) {
         int result = mr.deleteMember(removePhone);
-        if (result == 1)
-            System.out.println("회원탈퇴 완료!! BYE!!");
-        else
-            System.out.println("잘못된 입력!!");
+        return result;
     }
 }
