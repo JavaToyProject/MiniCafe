@@ -117,10 +117,6 @@ public class MemberRepository {
         for (int i = 0; i < memberList.size(); i++) {
             Member beforeMem = memberList.get(i);
             if (member.getPhone().compareTo(beforeMem.getPhone())==0) {
-                System.out.println("====== 수정 후 회원정보 ======");
-                System.out.println(member.toString());
-                System.out.println();
-
                 memberList.set(i, member);
 
                 File file = new File("src/main/java/member/db/member.dat");
