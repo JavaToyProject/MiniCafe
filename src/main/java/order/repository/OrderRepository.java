@@ -11,7 +11,7 @@ public class OrderRepository {
     private ArrayList<Order> orders = new ArrayList<>();
 
     public OrderRepository() {
-        File file = new File("src/main/java/order/db/order.dat");
+        File file = new File("src/main/java/order/db/orderDB.dat");
 
         if (!file.exists()) {
             ArrayList<Order> defaultOrders = new ArrayList<>();
@@ -103,7 +103,7 @@ public class OrderRepository {
             ooo = new OrderObjectOutput(
                     new BufferedOutputStream(
                             new FileOutputStream(
-                                    "src/main/java/order/db/order.dat",
+                                    "src/main/java/order/db/orderDB.dat",
                                     true)));
 
             ooo.writeObject(newOrder);
@@ -130,7 +130,7 @@ public class OrderRepository {
                 result = 1;
             }
         }
-        File file = new File("src/main/java/order/db/order.dat");
+        File file = new File("src/main/java/order/db/orderDB.dat");
         saveOrders(file, orders);
 
         return result;

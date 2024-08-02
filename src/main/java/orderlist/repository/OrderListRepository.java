@@ -15,14 +15,14 @@ public class OrderListRepository {
     public OrderListRepository() {
         File file = new File("src/main/java/orderlist/db/orderlistDB.dat");
 
-        if (!file.exists()) {
-            ArrayList<OrderList> defaultOrderList = new ArrayList<>();
-            defaultOrderList.add(new OrderList(1, "01012345678", MemberStatus.isMember, true, 13000, Payment.CASH));
-            defaultOrderList.add(new OrderList(2, "01098765432", MemberStatus.notMember, false, 9400, Payment.NAVERPAY));
-            defaultOrderList.add(new OrderList(3, "01056325478", MemberStatus.isMember, true, 31800, Payment.CARD));
-
-            saveOrderList(file, defaultOrderList);
-        }
+//        if (!file.exists()) {
+//            ArrayList<OrderList> defaultOrderList = new ArrayList<>();
+//            defaultOrderList.add(new OrderList(1, "01012345678", MemberStatus.isMember, true, 13000, Payment.CASH));
+//            defaultOrderList.add(new OrderList(2, "01098765432", MemberStatus.notMember, false, 9400, Payment.NAVERPAY));
+//            defaultOrderList.add(new OrderList(3, "01056325478", MemberStatus.isMember, true, 31800, Payment.CARD));
+//
+//            saveOrderList(file, defaultOrderList);
+//        }
 
         loadOrderList(file);
     }
@@ -37,7 +37,7 @@ public class OrderListRepository {
                 orderLists.add((OrderList) ois.readObject());
             }
         } catch (EOFException e){
-            System.out.println("주문목록 로딩 완료!!");
+            System.out.println("주문리스트목록 로딩 완료!!");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -107,7 +107,8 @@ public class OrderListRepository {
                                     true)));
             ooo.writeObject(newOrderList);
             orderLists.add(newOrderList);
-            System.out.println(orderLists);
+            for (OrderList ol : orderLists)
+                System.out.println(ol.toString());
             result = 1;
         } catch (IOException e) {
             throw new RuntimeException(e);

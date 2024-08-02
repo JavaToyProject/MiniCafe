@@ -37,8 +37,11 @@ public class OrderListService {
 
     public OrderList findOrderListByOrdNo(int searchOrdListNo) {
         OrderList sOrdLst = olr.selectOneOrderList(searchOrdListNo);
+        ArrayList<Order> sOrds = os.findOrderByOrdNo(searchOrdListNo);
         if (sOrdLst != null) {
             System.out.println(sOrdLst.toString());
+            for (Order order : sOrds)
+                System.out.println(order.toString());
             return sOrdLst;
         } else {
             System.out.println("존재하지 않는 주문번호입니다.");
@@ -56,11 +59,10 @@ public class OrderListService {
         Member fMem = ms.findOneMember(newOrderList.getPhoneNo());
 
 
-        if (os.findOrderByOrdNo(getOrderList.getOrderListNo()) == null) {
-
+        if (getOrderList == null) {
             if (fMem != null) {
                 newOrderList.setMemStatus(MemberStatus.isMember);
-                newOrderList.setDiscount(useStamp(newOrderList.getOrderListNo()));
+                newOrderList.setDiscount(useStamp(newOrderList.getPhoneNo()));
             } else
                 getOrderList.setMemStatus(MemberStatus.notMember);
 
@@ -114,8 +116,9 @@ public class OrderListService {
         return os.findOrderByOrdNo(orderListNo);
     }
 
-    public boolean useStamp(int orderListNo) {
-        Member tmpMem = ms.findOneMember(olr.selectOneOrderList(orderListNo).getPhoneNo());
+    public boolean useStamp(String phone) {
+        Member tmpMem = ms.findOneMember(phone);
+        System.out.println(tmpMem.toString());
         if (tmpMem.getStamps() >= 10 ){
             tmpMem.setStamps(tmpMem.getStamps() - 10);
             ms.updateMember(tmpMem);
@@ -124,10 +127,20 @@ public class OrderListService {
         return false;
     }
 
-    public void addStamp(int ordListNo, int subNum) {
+    public void addStamp(int ordListNo, String phone) {
+        Member tmpMem = ms.findOneMember(phone);
+        if (tmpMem != null) {
+            tmpMem.setStamps(tmpMem.getStamps() + os.getTotalCount(ordListNo));
+            ms.updateMember(tmpMem);
+        }
+    }
+
+    public void updateStamp(int ordListNo, int subNum) {
         Member tmpMem = ms.findOneMember(olr.selectOneOrderList(ordListNo).getPhoneNo());
-        tmpMem.setStamps(tmpMem.getStamps()+os.getTotalCount(ordListNo)+subNum);
-        ms.updateMember(tmpMem);
+        if (tmpMem != null) {
+            tmpMem.setStamps(tmpMem.getStamps() + os.getTotalCount(ordListNo) + subNum);
+            ms.updateMember(tmpMem);
+        }
     }
 
     public void resetStamp(int ordListNo) {

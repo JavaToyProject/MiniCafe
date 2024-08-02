@@ -84,8 +84,6 @@ public class Application {
                 int bevCode;
                 int cnt;
 
-
-
                 switch (inputNo) {
                     case 1:
                         System.out.print("추가 할 음료코드 입력: ");
@@ -150,7 +148,7 @@ public class Application {
         os.updateOrder(changeOrder);
 
         int changedOrdCnt = os.getTotalCount(ordeListrNo);
-        ols.addStamp(ordeListrNo, changedOrdCnt-oldOrderCnt);
+        ols.updateStamp(ordeListrNo, changedOrdCnt-oldOrderCnt);
         return changeOrderList;
     }
 
@@ -182,9 +180,12 @@ public class Application {
 
             newOrders.add(new Order(bevCode, cnt));
 
-            System.out.print("음료 추가(Y/M): ");
-            char yn = sc.next().charAt(0);
-            if (yn == 'N' || yn == 'n') break;
+            System.out.print("음료 추가(Y): ");
+            char yn = sc.next().toUpperCase().charAt(0);
+            sc.nextLine();
+
+            if (yn != 'Y') break;
+
         }
 
         System.out.print("핸드폰번호 입력('-'생략): ");
@@ -223,11 +224,11 @@ public class Application {
 
         newOrderList = new OrderList(newOrdLstNo, phone, pay);
 
-        for (Order order : newOrders)
-            order.setOrderListNo(newOrdLstNo);
+        for (int i = 0; i<newOrders.size(); i++)
+            newOrders.get(i).setOrderListNo(newOrdLstNo);
 
         ols.setOrders(newOrders);
-        ols.addStamp(newOrdLstNo, 0);
+        ols.addStamp(newOrdLstNo, phone);
 
         return newOrderList;
     }

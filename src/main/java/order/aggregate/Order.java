@@ -1,6 +1,8 @@
 package order.aggregate;
 
-public class Order {
+import java.io.Serializable;
+
+public class Order implements Serializable {
     private int orderNo;
     private int orderListNo;
     private int bevCode;

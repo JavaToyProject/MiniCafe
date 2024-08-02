@@ -42,11 +42,11 @@ public class MemberService {
             System.out.println("회원정보 수정에 실패했습니다. 정확한 회원번호를 입력해 주세요.");
         } else {
             int result = mr.updateMember(member);
-            if (result == 1) {
-                System.out.println(member.getName() + "님 회원정보 수정 완료!!");
-            } else {
-                System.out.println("회원정보 수정에 실패했습니다.");
-            }
+//            if (result == 1) {
+//                System.out.println(member.getName() + "님 회원정보 수정 완료!!");
+//            } else {
+//                System.out.println("회원정보 수정에 실패했습니다.");
+//            }
         }
     }
 
